@@ -1,0 +1,766 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="这里是van的个人博客。" />
+
+
+
+  <meta name="keywords" content="SQL," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Van's blog" type="application/atom+xml" />
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="主要想记录一些sql的基础操作命令。
+什么是SQL?当面对一个陌生的数据库时，通常需要一种方式与它进行交互，以完成用户所需要的各种工作，这个时候，就要用到SQL语言了。SQL是Structure Query Language(结构化查询语言)的缩写，它是使用关系模型的数据库语言，最早的ANSI标准于1986年完成，就被叫做SQL-86。标准的出台使SQL作为标准关系数据库语言的地位得到加强。正因为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL基础">
+<meta property="og:url" content="https://lancerwan.github.io/2016/03/02/SQL基础/index.html">
+<meta property="og:site_name" content="Van's blog">
+<meta property="og:description" content="主要想记录一些sql的基础操作命令。
+什么是SQL?当面对一个陌生的数据库时，通常需要一种方式与它进行交互，以完成用户所需要的各种工作，这个时候，就要用到SQL语言了。SQL是Structure Query Language(结构化查询语言)的缩写，它是使用关系模型的数据库语言，最早的ANSI标准于1986年完成，就被叫做SQL-86。标准的出台使SQL作为标准关系数据库语言的地位得到加强。正因为">
+<meta property="og:updated_time" content="2016-03-05T14:31:13.192Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL基础">
+<meta name="twitter:description" content="主要想记录一些sql的基础操作命令。
+什么是SQL?当面对一个陌生的数据库时，通常需要一种方式与它进行交互，以完成用户所需要的各种工作，这个时候，就要用到SQL语言了。SQL是Structure Query Language(结构化查询语言)的缩写，它是使用关系模型的数据库语言，最早的ANSI标准于1986年完成，就被叫做SQL-86。标准的出台使SQL作为标准关系数据库语言的地位得到加强。正因为">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> SQL基础 | Van's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Van's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SQL基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-02T16:58:32+08:00" content="2016-03-02">
+              2016-03-02
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/02/SQL基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/02/SQL基础/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>主要想记录一些sql的基础操作命令。</p>
+<h1 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL?"></a>什么是SQL?</h1><p>当面对一个陌生的数据库时，通常需要一种方式与它进行交互，以完成用户所需要的各种工作，这个时候，就要用到SQL语言了。<br>SQL是Structure Query Language(结构化查询语言)的缩写，它是使用关系模型的数据库语言，最早的ANSI标准于1986年完成，就被叫做SQL-86。标准的出台使SQL作为标准关系数据库语言的地位得到加强。正因为SQL语言的标准化，所以大多数关系型数据库系统都支持SQL语言，它已经发展成多种平台进行交互操作的底层会话语言。<br><a id="more"></a></p>
+<h1 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h1><ul>
+<li>DDL语句：数据定义语言，定义了不同的数据段、数据库、表、列、索引等数据库对象的定义。</li>
+<li>DML语句：数据操纵语句，用于添加删除更新和查询数据库记录，并检查数据完整性。</li>
+<li>DCL语句：数据控制语句，用于控制不同数据段直接的许可和访问级别的语句。这些语句定义了数据库、表、字段、用户的访问权限和安全级别。</li>
+</ul>
+<h1 id="DDL语句"><a href="#DDL语句" class="headerlink" title="DDL语句"></a>DDL语句</h1><p>下面是介绍一些常用DDL语句的使用方法。</p>
+<h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>启动mysql服务之后，输入以下命令连接到mysql服务器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wan@l-virtual-machin:~$ mysql -u root -p</span><br></pre></td></tr></table></figure></p>
+<p>创建数据库的语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; create database dbname;&#10;Query OK, 1 row affected (0.07 sec)</span><br></pre></td></tr></table></figure></p>
+<p>Query OK表示上面的命令执行成功。<br>查看存在的数据库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; show databases;&#10;+--------------------+&#10;| Database           |&#10;+--------------------+&#10;| information_schema |&#10;| dbname             |&#10;| mysql              |&#10;| performance_schema |&#10;| van                |&#10;+--------------------+&#10;5 rows in set (0.01 sec)</span><br></pre></td></tr></table></figure></p>
+<p>information_schema主要存储了系统中的一些数据库对象信息，比如用户表信息，列信息，权限信息，字符集信息，分区信息等。mysql存储了系统的用户权限信息。<br>选择要操作的数据库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use dbname&#65307;</span><br></pre></td></tr></table></figure></p>
+<p>再用以下命令来查看数据库中创建的表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show tables;</span><br></pre></td></tr></table></figure></p>
+<h2 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h2><p>删除数据库的语法很简单：<br>drop database dbname;</p>
+<h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><p>创建一张表的基本语法如下：<br>CREATE TABLE tablename (column_name_1 column_type_1 constrains,column_name_2 column_type_2 constraints,…column_name_n column_type_n,constrains)<br>mysql的表名是以目录形式存在磁盘上，所以表名的字符可以用任何目录名允许的字符。constraints是这个列的约束条件。<br>例如创建一个名为emp的表。表中包括ename,hiredata,和sal三个字段，字段类型分别为varchar（10）、data、int（2）：<br>mysql&gt; create table emp(ename varchar(10),hiredate date,sal decimal(10,2),deptno int(2));<br>Query OK, 0 rows affected (0.60 sec)<br>表创建完毕后，如果需要查看表的定义，使用如下命令：<br>desc tablenaem;<br>如果要查看更全面的表定义信息，有时就需要通过查看创建表的SQL语句得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; show create table emp \G;&#10;*************************** 1. row ***************************&#10;       Table: emp&#10;Create Table: CREATE TABLE `emp` (&#10;  `ename` varchar(10) DEFAULT NULL,&#10;  `hiredate` date DEFAULT NULL,&#10;  `sal` decimal(10,2) DEFAULT NULL,&#10;  `deptno` int(2) DEFAULT NULL&#10;) ENGINE=InnoDB DEFAULT CHARSET=latin1&#10;1 row in set (0.03 sec)&#10;&#10;ERROR: &#10;No query specified</span><br></pre></td></tr></table></figure></p>
+<p>\G选项的含义是使得记录能够按着字段竖排，易于显示内容比较长的记录。</p>
+<h2 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h2><p>表的删除命令如下：<br>drop table tablename;</p>
+<h2 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h2><p>大多数情况下，表的修改都用alter table语句。</p>
+<h3 id="修改表类型"><a href="#修改表类型" class="headerlink" title="修改表类型"></a>修改表类型</h3><p>语法如下：<br>ALTER TABLE tablename MODIFY [COLUMN] column_definition [FIRST | AFTER col_name]<br>例如修改emp的ename字段定义，将varchar(10)改为varchar(20):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; alter table emp modify ename varchar(20);</span><br></pre></td></tr></table></figure></p>
+<h3 id="增加表字段"><a href="#增加表字段" class="headerlink" title="增加表字段"></a>增加表字段</h3><p>ALTER TABLE tablename ADD [COLUMN] column_definition [FIRST|AFTER col_name]<br>例如，表emp上增加字段age，类型为int（3）:<br>mysql&gt; alter table emp add column age int(3);</p>
+<h3 id="删除表字段"><a href="#删除表字段" class="headerlink" title="删除表字段"></a>删除表字段</h3><p>ALTER TABLE tablename DROP [COLUMN] col_name;</p>
+<h3 id="字段改名"><a href="#字段改名" class="headerlink" title="字段改名"></a>字段改名</h3><p>ALTER TABLE tablename CHANGE [COLUMN] old_col_name column_definition [FIRST|AFTER col_name];<br>将age改名为age1，同时修改字段类型为int(4):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; alter table emp add column age int(3);&#10;Query OK, 0 rows affected (0.19 sec)&#10;Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure></p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>change和modify都可以修改表的定义，但是change后面需要写两次别名，不方便。change的优点是可以修改列名称，modify不行。</p>
+<h3 id="修改字段顺序排列"><a href="#修改字段顺序排列" class="headerlink" title="修改字段顺序排列"></a>修改字段顺序排列</h3><p>前文的字段增加和修改语法中，都有一个可选项FIRST|AFTER column_name,该选项可以用来修改字段在表中的位置，默认ADD增加的新字段是加在表的最后位置，而change/modify默认都不会改变字段的位置，<br>例如把新增字段birth data加在ename之后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; alter table emp add birth date after ename;&#10;Query OK, 0 rows affected (0.09 sec)&#10;Records: 0  Duplicates: 0  Warnings: 0&#10;&#10;mysql&#62; desc emp&#10;    -&#62; ;&#10;+----------+---------------+------+-----+---------+-------+&#10;| Field    | Type          | Null | Key | Default | Extra |&#10;+----------+---------------+------+-----+---------+-------+&#10;| ename    | varchar(20)   | YES  |     | NULL    |       |&#10;| birth    | date          | YES  |     | NULL    |       |&#10;| hiredate | date          | YES  |     | NULL    |       |&#10;| sal      | decimal(10,2) | YES  |     | NULL    |       |&#10;| deptno   | int(2)        | YES  |     | NULL    |       |&#10;| age      | int(3)        | YES  |     | NULL    |       |&#10;+----------+---------------+------+-----+---------+-------+&#10;6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h3 id="更改表名"><a href="#更改表名" class="headerlink" title="更改表名"></a>更改表名</h3><p>将表emp改名为emp1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; alter table emp rename emp1;&#10;Query OK, 0 rows affected (0.04 sec)</span><br></pre></td></tr></table></figure></p>
+<h1 id="DML语句"><a href="#DML语句" class="headerlink" title="DML语句"></a>DML语句</h1><p>DML操作是指对数据库中表记录的操作，主要包括表记录的插入、更新、删除和查询，是开发人员日常使用最频繁的操作。</p>
+<h2 id="插入记录"><a href="#插入记录" class="headerlink" title="插入记录"></a>插入记录</h2><p>表创建好后，就可以往里插入记录。<br>例如向表emp中插入以下记录，ename为zzx1，hiredate为2016-01-01,sal为2000，deptno为1，命令执行如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; insert into emp1 (ename,hiredate,sal,deptno) VALUES(&#39;zzxl&#39;,&#39;2016-01-01&#39;,&#39;2000&#39;,1);&#10;Query OK, 1 row affected (0.04 sec)</span><br></pre></td></tr></table></figure></p>
+<p>也可以不用指定字段名称，但values后面的顺序应该和字段的排列顺序一致。</p>
+<h2 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h2><p>表里的记录可以通过update命令进行更改，例如我们可以将表emp中ename为“zzxl”的薪水从2000更改为4000：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; update emp set sal=4000 where ename=&#39;zzxl&#39;;&#10;Query OK, 1 row affected (0.02 sec)&#10;Rows matched: 1  Changed: 1  Warnings: 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="删除记录"><a href="#删除记录" class="headerlink" title="删除记录"></a>删除记录</h2><p>delete from tablenaem [WHERE CONDITION];</p>
+<h2 id="查询记录"><a href="#查询记录" class="headerlink" title="查询记录"></a>查询记录</h2><p>数据插入到数据库后，可以利用select命令进行各种查询，select的语法很复杂，这里只说最基本的语法:<br>select * from tablename [WHERE CONDITION];</p>
+<h3 id="查询不重复的记录"><a href="#查询不重复的记录" class="headerlink" title="查询不重复的记录"></a>查询不重复的记录</h3><p>有时需要将表中的记录去掉重复后显示出来，可以用distinct关键字实现：<br>select distinct deptno from emp;</p>
+<h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><p>有时候用户不需要查询所有的记录，而只是要根据限定条件来查询一部分数据，用WHERE关键字可以实现这样的操作。<br>mysql&gt; select * from emp where deptno=1;</p>
+<h3 id="排序和限制"><a href="#排序和限制" class="headerlink" title="排序和限制"></a>排序和限制</h3><p>我们经常会有这样的需求，取出按照某个字段进行排序后的结果记录集，这就用到了数据库的排序操作，用关键字order by来实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM tablename [WHERE CONDITION] [ORDER BY field1 [DESC|ASC],field2 [DESC|ASC],...fieldn [DESC|ASC];</span><br></pre></td></tr></table></figure></p>
+<p>对于排序后的记录，如果只希望显示一部分，而不是全部，这时可以使用limit关键字实现，语法如下：<br>select …[limit offset_start,row_count];<br>其中off_start表示记录的起始偏移量，row_count表示显示的行数，如：<br>select * from emp order by sal limit 1,3;</p>
+<h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><p>很多情况下，用户都要进行一些汇总操作，比如统计整个公司的人数或者统计每个部门的人数，这时就需要用到sql的聚合操作。<br>聚合操作语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT [field1,field2,...fieldn] fun_name&#10;FROM tablename&#10;[WHERE where_contition]&#10;[GROUP BY field1,field2,...fieldn&#10;[WITH ROLLUP]]&#10;[HAVING where_contition]</span><br></pre></td></tr></table></figure></p>
+<p>对其参数进行以下说明。</p>
+<ul>
+<li>fun_name表示要做的聚合操作，也就是聚合函数，常用的有sum、count、max、min。</li>
+<li>GROUP BY 关键字表示要进行分类聚合的字段，比如要按照部门分类统计员工数量，部门就应该写在group by后面。</li>
+<li>WITH ROLLUP是可选语法，表明是否对分类聚合后的结果进行汇总。</li>
+<li>HAVING关键字表示对分类后的结果再进行条件的过滤。<h3 id="表连接"><a href="#表连接" class="headerlink" title="表连接"></a>表连接</h3>当需要显示多个表中的字段时，就可以用表连接来实现这样的功能。<br>大体上，表连接分为内连接和外连接，内连接仅会选出表中互相匹配的记录，而外连接会选出其他不匹配的记录，我们常用的是内连接。<br>例如查询出所有雇员的名字和所在部门名称，因为雇员名称和部门分别存放在emp和dept中，因此需要使用表连接进行查询：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; select ename,deptname from emp,dept where emp.deptno=dept.deptno;&#10;### &#23376;&#26597;&#35810;&#10;&#26377;&#26102;&#20505;&#24403;&#36827;&#34892;&#26597;&#35810;&#26102;&#65292;&#38656;&#35201;&#30340;&#26465;&#20214;&#26159;&#21478;&#22806;&#19968;&#20010;select&#35821;&#21477;&#30340;&#32467;&#26524;&#65292;&#36825;&#26102;&#23601;&#35201;&#29992;&#21040;&#23376;&#26597;&#35810;&#12290;&#10;&#20363;&#22914;&#20174;&#34920;emp&#20013;&#26597;&#35810;&#20986;&#25152;&#26377;&#37096;&#38376;&#22312;dept&#34920;&#20013;&#30340;&#25152;&#26377;&#35760;&#24405;&#65306;&#10;mysql&#62; select * from emp where deptno in(select deptno from dept);&#10;### &#35760;&#24405;&#32852;&#21621;&#10;&#23558;&#20004;&#20010;&#34920;&#30340;&#25968;&#25454;&#25353;&#29031;&#19968;&#23450;&#30340;&#26597;&#35810;&#26465;&#20214;&#26597;&#35810;&#20986;&#26469;&#21518;&#65292;&#23558;&#32467;&#26524;&#21512;&#24182;&#21040;&#19968;&#36215;&#26174;&#31034;&#20986;&#26469;&#65292;&#36825;&#26102;&#20505;&#23601;&#38656;&#35201;&#29992;union&#21644;union all&#20851;&#38190;&#23383;&#26469;&#23454;&#29616;&#36825;&#26679;&#30340;&#21151;&#33021;&#65292;&#20855;&#20307;&#35821;&#27861;&#22914;&#19979;&#65306;&#10;SELECT * FROM t1&#10;UNION|UNION ALL&#10;SELECT * FROM t2&#10;...&#10;UNION|UNION ALL&#10;SELECT * FROM tn&#10;# DCL&#35821;&#21477;&#10;&#20027;&#35201;&#26159;DBA&#29992;&#26469;&#31649;&#29702;&#31995;&#32479;&#20013;&#30340;&#23545;&#35937;&#26435;&#38480;&#26102;&#20351;&#29992;&#12290;&#10;&#21019;&#24314;&#19968;&#20010;&#25968;&#25454;&#24211;&#29992;&#25143;zl&#65292;&#20855;&#26377;&#23545;van&#25968;&#25454;&#24211;&#20013;&#25152;&#26377;&#34920;&#30340;select/insert&#26435;&#38480;&#65306;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>mysql&gt; grant select on van.*to ‘zl@localhost’ identified by ‘123’;<br>Query OK, 0 rows affected (0.09 sec)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#26435;&#38480;&#21464;&#26356;&#65292;&#25910;&#22238;select&#30340;&#26435;&#38480;&#65292;</span><br></pre></td></tr></table></figure></p>
+<p>mysql&gt; revoke select on van.* from ‘zl@localhost’;<br>Query OK, 0 rows affected (0.00 sec)<br>~~~</p>
+<h1 id="帮助的使用"><a href="#帮助的使用" class="headerlink" title="帮助的使用"></a>帮助的使用</h1><p>可以使用“？contents”命令来显示所有可供查询的分类。<br>而对于列出的分类。可以使用“？ 类别名称”的方式对用户感兴趣的内容做进一步的查看。<br>当需要快速查阅某项语法时，可以使用关键字进行快速查询。“？关键字”</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQL/" rel="tag">#SQL</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/29/hexo添加图片、音乐和视频/" rel="next" title="hexo添加图片、音乐">
+                <i class="fa fa-chevron-left"></i> hexo添加图片、音乐
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/04/中国历代政治得失“/" rel="prev" title="中国历代政治得失">
+                中国历代政治得失 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/03/02/SQL基础/"
+                   data-title="SQL基础" data-url="https://lancerwan.github.io/2016/03/02/SQL基础/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Van" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Van</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">这里是van的个人博客。</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3927336186/" target="_blank">
+                  <i class="fa fa-weibo"></i> Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.knownsec.com/Knownsec_RD_Checklist/v2.2.html" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是SQL"><span class="nav-number">1.</span> <span class="nav-text">什么是SQL?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL分类"><span class="nav-number">2.</span> <span class="nav-text">SQL分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DDL语句"><span class="nav-number">3.</span> <span class="nav-text">DDL语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建数据库"><span class="nav-number">3.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除数据库"><span class="nav-number">3.2.</span> <span class="nav-text">删除数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建表"><span class="nav-number">3.3.</span> <span class="nav-text">创建表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除表"><span class="nav-number">3.4.</span> <span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改表"><span class="nav-number">3.5.</span> <span class="nav-text">修改表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改表类型"><span class="nav-number">3.5.1.</span> <span class="nav-text">修改表类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加表字段"><span class="nav-number">3.5.2.</span> <span class="nav-text">增加表字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除表字段"><span class="nav-number">3.5.3.</span> <span class="nav-text">删除表字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字段改名"><span class="nav-number">3.5.4.</span> <span class="nav-text">字段改名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">3.5.4.1.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改字段顺序排列"><span class="nav-number">3.5.5.</span> <span class="nav-text">修改字段顺序排列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改表名"><span class="nav-number">3.5.6.</span> <span class="nav-text">更改表名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DML语句"><span class="nav-number">4.</span> <span class="nav-text">DML语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入记录"><span class="nav-number">4.1.</span> <span class="nav-text">插入记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新记录"><span class="nav-number">4.2.</span> <span class="nav-text">更新记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除记录"><span class="nav-number">4.3.</span> <span class="nav-text">删除记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询记录"><span class="nav-number">4.4.</span> <span class="nav-text">查询记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询不重复的记录"><span class="nav-number">4.4.1.</span> <span class="nav-text">查询不重复的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件查询"><span class="nav-number">4.4.2.</span> <span class="nav-text">条件查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序和限制"><span class="nav-number">4.4.3.</span> <span class="nav-text">排序和限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚合"><span class="nav-number">4.4.4.</span> <span class="nav-text">聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表连接"><span class="nav-number">4.4.5.</span> <span class="nav-text">表连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#帮助的使用"><span class="nav-number">5.</span> <span class="nav-text">帮助的使用</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Van</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"vanceblog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+  
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/MathJax.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/config/TeX-AMS-MML_HTMLorMML.js"></script>
+  
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
